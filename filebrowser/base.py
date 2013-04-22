@@ -268,7 +268,11 @@ class FileObject():
         "path relative to DIRECTORY"
         return path_strip(self.path, self.site.directory)
     path_relative_directory = property(_path_relative_directory)
-    
+
+    def _dirname(self):
+        return os.path.dirname(self.path_relative_directory)
+    dirname = property(_dirname)
+
     def _url(self):
         return self.site.storage.url(self.path)
     url = property(_url)
@@ -371,15 +375,14 @@ class FileObject():
         version_list = []
         if self.filetype == "Image":
             for version in VERSIONS:
-                version_list.append(os.path.join(self.versions_basedir, self.version_name(version)))
+                version_list.append(os.path.join(self.versions_basedir, self.folder, self.version_name(version)))
         return version_list
     
     def admin_versions(self):
         version_list = []
         if self.filetype == "Image":
             for version in ADMIN_VERSIONS:
-                version_list.append(os.path.join(self.versions_basedir, self.version_name(version)))
-                #version_list.append(FileObject(os.path.join(self.versions_basedir, self.version_name(version))))
+                version_list.append(os.path.join(self.versions_basedir, self.folder, self.version_name(version)))
         return version_list
     
     def version_generate(self, version_suffix):
