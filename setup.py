@@ -25,7 +25,4 @@ setup(
         'Programming Language :: Python',
     ],
     zip_safe = False,
-    install_requires = [
-        'django-grappelli>=2.4,<2.4.99',
-    ],
 )
