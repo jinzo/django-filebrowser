@@ -26,7 +26,7 @@ from django.core.files.storage import DefaultStorage, default_storage, FileSyste
 # FILEBROWSER IMPORTS
 from filebrowser.settings import STRICT_PIL, DIRECTORY, EXTENSIONS, SELECT_FORMATS, ADMIN_VERSIONS, ADMIN_THUMBNAIL, MAX_UPLOAD_SIZE,\
     NORMALIZE_FILENAME, CONVERT_FILENAME, SEARCH_TRAVERSE, EXCLUDE, VERSIONS, EXTENSION_LIST, DEFAULT_SORTING_BY, DEFAULT_SORTING_ORDER,\
-    LIST_PER_PAGE, OVERWRITE_EXISTING
+    LIST_PER_PAGE, OVERWRITE_EXISTING, THEME
 from filebrowser.templatetags.fb_tags import query_helper
 from filebrowser.base import FileListing, FileObject
 from filebrowser.decorators import path_exists, file_exists
@@ -55,7 +55,6 @@ except ImportError:
 
 # This cache contains all *instantiated* FileBrowser sites
 _sites_cache = {}
-
 
 def get_site_dict(app_name='filebrowser'):
     """
@@ -343,7 +342,7 @@ class FileBrowserSite(object):
         except (EmptyPage, InvalidPage):
             page = p.page(p.num_pages)
 
-        return render_to_response('filebrowser/index.html', {
+        return render_to_response('filebrowser/admin/%s/index.html' % THEME, {
             'p': p,
             'page': page,
             'filelisting': filelisting,
@@ -381,7 +380,7 @@ class FileBrowserSite(object):
         else:
             form = CreateDirForm(path, filebrowser_site=self)
 
-        return render_to_response('filebrowser/createdir.html', {
+        return render_to_response('filebrowser/admin/%s/createdir.html' % THEME, {
             'form': form,
             'query': query,
             'title': _(u'New Folder'),
@@ -395,7 +394,9 @@ class FileBrowserSite(object):
         "Multipe File Upload."
         query = request.GET
 
-        return render_to_response('filebrowser/upload.html', {
+        path = u'%s' % os.path.join(self.directory, query.get('dir', ''))
+        
+        return render_to_response('filebrowser/admin/%s/upload.html' % THEME, {
             'query': query,
             'title': _(u'Select files to upload'),
             'settings_var': get_settings_var(directory=self.directory),
@@ -424,8 +425,8 @@ class FileBrowserSite(object):
         else:
             filelisting = None
             additional_files = None
-
-        return render_to_response('filebrowser/delete_confirm.html', {
+        
+        return render_to_response('filebrowser/admin/%s/delete_confirm.html' % THEME, {
             'fileobject': fileobject,
             'filelisting': filelisting,
             'additional_files': additional_files,
@@ -498,8 +499,8 @@ class FileBrowserSite(object):
                     form.errors['name'] = forms.util.ErrorList([_('Error.')])
         else:
             form = ChangeForm(initial={"name": fileobject.filename}, path=path, fileobject=fileobject, filebrowser_site=self)
-
-        return render_to_response('filebrowser/detail.html', {
+        
+        return render_to_response('filebrowser/admin/%s/detail.html' % THEME, {
             'form': form,
             'fileobject': fileobject,
             'query': query,
@@ -518,8 +519,8 @@ class FileBrowserSite(object):
         query = request.GET
         path = u'%s' % os.path.join(self.directory, query.get('dir', ''))
         fileobject = FileObject(os.path.join(path, query.get('filename', '')), site=self)
-
-        return render_to_response('filebrowser/version.html', {
+        
+        return render_to_response('filebrowser/admin/%s/version.html' % THEME, {
             'fileobject': fileobject,
             'query': query,
             'settings_var': get_settings_var(directory=self.directory),

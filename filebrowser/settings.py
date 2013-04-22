@@ -104,6 +104,8 @@ DEFAULT_PERMISSIONS = getattr(settings, "FILEBROWSER_DEFAULT_PERMISSIONS", 0o755
 # Overwrite existing files on upload
 OVERWRITE_EXISTING = getattr(settings, "FILEBROWSER_OVERWRITE_EXISTING", True)
 
+THEME = getattr(settings, "FILEBROWSER_THEME", 'grappelli')
+
 # EXTRA TRANSLATION STRINGS
 
 # The following strings are not availabe within views or templates
