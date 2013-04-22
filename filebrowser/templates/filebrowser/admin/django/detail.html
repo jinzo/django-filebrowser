@@ -1,7 +1,7 @@
 {% extends "admin/base_site.html" %}
 
 <!-- LOADING -->
-{% load i18n adminmedia fb_tags fb_versions admin_static %}
+{% load i18n fb_tags fb_versions admin_static %}
 
 <!-- STYLESHEETS -->
 {% block extrastyle %}
@@ -38,7 +38,11 @@
 {% block bodyclass %}change-form filebrowser{% if query.pop %} popup{% endif %}{% endblock %}
 
 <!-- BREADCRBUMBS -->
-{% block breadcrumbs %}{% include "filebrowser/include/breadcrumbs.html" %}{% endblock %}
+{% block breadcrumbs %}
+    {% with "filebrowser/admin/"|add:settings_var.THEME|add:"/include/breadcrumbs.html" as breadcrumbs_template %}
+    {% include breadcrumbs_template %}
+    {% endwith %}
+{% endblock %}
 
 <!-- CONTENT -->
 {% block content %}
@@ -148,7 +152,7 @@
         <div class="submit-row">
             <input type="submit" value="{% trans 'Save' %}" class="default" />
             <p class="deletelink-box">
-                <a href="{% url filebrowser:fb_delete_confirm %}{% query_string %}" class="deletelink">{% trans "Delete" %}</a>
+                <a href="{% url 'filebrowser:fb_delete_confirm' %}{% query_string %}" class="deletelink">{% trans "Delete" %}</a>
             </p>
             <input type="submit" value="{% trans 'Save and continue editing' %}" name="_continue" />
         </div>

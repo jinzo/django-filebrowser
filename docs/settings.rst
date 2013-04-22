@@ -264,3 +264,12 @@ OVERWRITE_EXISTING
 ``True`` in order to overwrite existing files, ``False`` to use the behaviour of the storage engine::
 
     OVERWRITE_EXISTING = getattr(settings, "FILEBROWSER_OVERWRITE_EXISTING", True)
+
+THEME
+^^^^^^^^^^^^^^^^^^
+
+.. versionadded:: 3.5.3
+
+Selec the admin theme you wish to use. Either ``grappelli`` (default) or ``django``::
+
+    THEME = getattr(settings, "FILEBROWSER_THEME", 'grappelli')
