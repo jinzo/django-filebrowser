@@ -1,7 +1,7 @@
 {% extends "admin/base_site.html" %}
 
 <!-- LOADING -->
-{% load i18n adminmedia fb_tags fb_csrf %}
+{% load i18n fb_tags fb_csrf %}
 
 <!-- STYLESHEETS -->
 {% block extrastyle %}
@@ -15,7 +15,11 @@
 {% block content-class %}content-flexible{% endblock %}
 
 <!-- BREADCRUMBS -->
-{% block breadcrumbs %}{% include "filebrowser/include/breadcrumbs.html" %}{% endblock %}
+{% block breadcrumbs %}
+    {% with "filebrowser/admin/"|add:settings_var.THEME|add:"/include/breadcrumbs.html" as breadcrumbs_template %}
+    {% include breadcrumbs_template %}
+    {% endwith %}
+{% endblock %}
 
 <!-- CONTENT -->
 {% block content %}

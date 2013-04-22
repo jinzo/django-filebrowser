@@ -1,7 +1,7 @@
 {% extends "admin/base_site.html" %}
 
 <!-- LOADING -->
-{% load i18n adminmedia fb_tags fb_versions admin_static %}
+{% load i18n fb_tags fb_versions admin_static %}
 
 <!-- STYLESHEETS -->
 {% block extrastyle %}
@@ -20,7 +20,11 @@
 {% block bodyclass %}change-form filebrowser{% if query.pop %} popup{% endif %}{% endblock %}
 
 <!-- BREADCRBUMBS -->
-{% block breadcrumbs %}{% include "filebrowser/include/breadcrumbs.html" %}{% endblock %}
+{% block breadcrumbs %}
+    {% with "filebrowser/admin/"|add:settings_var.THEME|add:"/include/breadcrumbs.html" as breadcrumbs_template %}
+    {% include breadcrumbs_template %}
+    {% endwith %}
+{% endblock %}
 
 <!-- CONTENT -->
 {% block content %}
@@ -48,9 +52,9 @@
         </fieldset>
         <div class="submit-row">
             <p class="deletelink-box">
-                <a href="{% url filebrowser:fb_detail %}{% query_string %}" class="deletelink">{% trans "Cancel" %}</a>
+                <a href="{% url 'filebrowser:fb_detail' %}{% query_string %}" class="deletelink">{% trans "Cancel" %}</a>
             </p>
-            <a href="{% url filebrowser:fb_delete %}{% query_string %}" class="button default">{% trans "Yes, I'm sure" %}</a>
+            <a href="{% url 'filebrowser:fb_delete' %}{% query_string %}" class="button default">{% trans "Yes, I'm sure" %}</a>
         </div>
     </form>
 </div>
