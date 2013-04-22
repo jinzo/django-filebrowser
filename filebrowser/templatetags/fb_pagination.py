@@ -1,15 +1,15 @@
 # coding: utf-8
 
 # DJANGO IMPORTS
-from django.utils.html import escape
-from django.utils.safestring import mark_safe
 from django.template import Library
+
+from filebrowser.settings import THEME
 
 register = Library()
 DOT = '.'
 
 
-@register.inclusion_tag('filebrowser/include/paginator.html', takes_context=True)
+@register.inclusion_tag('filebrowser/admin/%s/include/paginator.html' % THEME, takes_context=True)
 def pagination(context):
     page_num = context['page'].number-1
     paginator = context['p']
