@@ -20,8 +20,8 @@ FileBrowser 3.5 requires
 Differences to upstream
 -----------------------
 
-The major difference is the option for themes, so various Django Admin intefraces can be supported.
-Currently only Djago stock admin interface and Grappelli 2.4 or 2.5 are supported.
+The major difference in relation to upstream, is the support for themes, so various Django Admin intefraces can be used.
+Currently only Django stock admin interface and Grappelli 2.4 or 2.5 are supported.
 
 Further plans include support for pluggable upload frontends, django-xadmin support,...
 
