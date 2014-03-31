@@ -1,41 +1,22 @@
 {% extends "admin/base_site.html" %}
 
 <!-- LOADING -->
-{% load i18n fb_tags fb_versions %}
-{% load admin_static %}
-
-<!-- STYLESHEETS -->
-{% block stylesheets %}
-    {{ block.super }}
-    <link rel="stylesheet" type="text/css" href="{{ settings_var.URL_FILEBROWSER_MEDIA }}css/filebrowser.css" />
-{% endblock %}
+{% load admin_static i18n fb_tags fb_versions %}
 
 <!-- JAVASCRIPTS -->
 {% block extrahead %}
-    <script type="text/javascript" src="{{ jsi18nurl|default:"../../../jsi18n/" }}"></script>
-    <script type="text/javascript" src="{% static "admin/js/core.js" %}"></script>
-    <script type="text/javascript" src="{% static "admin/js/RelatedObjectLookups.js" %}"></script>
-    <script type="text/javascript" src="{% static "admin/js/jquery.js" %}"></script>
+    {{ block.super }}
+    <script type="text/javascript" src="{% static "admin/js/jquery.min.js" %}"></script>
     <script type="text/javascript" src="{% static "admin/js/jquery.init.js" %}"></script>
     {% ifequal query.pop '1' %} <!-- FileBrowseField -->
-    <script language="javascript" type="text/javascript" src="{{ settings_var.URL_FILEBROWSER_MEDIA }}js/FB_FileBrowseField.js"></script>
+    <script language="javascript" type="text/javascript" src="{% static "filebrowser/js/FB_FileBrowseField.js" %}"></script>
     {% endifequal %}
     {% ifequal query.pop '2' %} <!-- TinyMCE -->
-    <script language="javascript" type="text/javascript" src="{{ settings_var.URL_TINYMCE }}tiny_mce_popup.js"></script>
-    <script language="javascript" type="text/javascript" src="{{ settings_var.URL_FILEBROWSER_MEDIA }}js/FB_TinyMCE.js"></script>
+    <script language="javascript" type="text/javascript" src="{% static "tiny_mce/tiny_mce_popup.js" %}"></script>
+    <script language="javascript" type="text/javascript" src="{% static "filebrowser/js/FB_TinyMCE.js" %}"></script>
     {% if query.mce_rdomain %}<script language="javascript">document.domain = "{{ query.mce_rdomain }}"</script>{% endif %}
     {% endifequal %}
 {% endblock %}
-
-<!-- COLTYPE/BODYCLASS -->
-{% block bodyclass %}change-list filebrowser{% if query.pop %} popup{% endif %}{% endblock %}
-{% block content-class %}content-flexible{% endblock %}
-
-<!-- BREADCRUMBS -->
-{% block breadcrumbs %}{% endblock %}
-
-<!-- OBJECT-TOOLS -->
-{% block object-tools %}{{ image_version.path }}{% endblock %}
 
 <!-- CONTENT -->
 {% block content %}

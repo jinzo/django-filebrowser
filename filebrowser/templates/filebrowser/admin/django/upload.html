@@ -1,13 +1,14 @@
 {% extends "admin/base_site.html" %}
 
 <!-- LOADING -->
-{% load i18n l10n fb_tags admin_static %}
+{% load admin_static i18n l10n fb_tags %}
+{% load url from future %}
 
 <!-- STYLESHEETS -->
 {% block extrastyle %}
     {{ block.super }}
     <link rel="stylesheet" type="text/css" href="{% static "admin/css/forms.css" %}" />
-    <link rel="stylesheet" type="text/css" href="{{ settings_var.URL_FILEBROWSER_MEDIA }}css/filebrowser.css" />
+    <link rel="stylesheet" type="text/css" href="{% static "filebrowser/css/filebrowser.css" %}" />
 {% endblock %}
 
 <!-- JAVASCRIPTS -->
@@ -15,23 +16,30 @@
     {{ block.super }}
     <script type="text/javascript" src="{% static "admin/js/jquery.min.js" %}"></script>
     <script type="text/javascript" src="{% static "admin/js/jquery.init.js" %}"></script>
+    <script type="text/javascript" src="{% static "admin/js/collapse.min.js" %}"></script>
     <script type="text/javascript" src="../../jsi18n/"></script>
-    <script type="text/javascript" src="{{ settings_var.URL_FILEBROWSER_MEDIA }}js/fileuploader.js"></script>
+    <script type="text/javascript" src="{% static "filebrowser/js/fileuploader.js" %}"></script>
     <script type="text/javascript">
     (function($){
         $(document).ready(function() {
             var uploader = new qq.FileUploader({
-                element: $('#file-uploader').get(0),
+                element: $('#file-uploader > div').get(0),
                 action: '{% url 'filebrowser:fb_do_upload' %}',
 
-                fileTemplate: '<li>' +
+                template: '<div class="qq-uploader">' +
+                    '<div class="qq-upload-drop-area"><span>{% trans "Drop files here to upload" %}</span></div>' +
+                    '<div class="qq-upload-button">{% trans "Upload a file" %}</div>' +
+                    '<div class="qq-upload-list"></div>' +
+                '</div>',
+
+                fileTemplate: '<div>' +
                     '<span class="qq-upload-file"></span>' +
                     '<span class="qq-upload-spinner"></span>' +
                     '<span class="qq-upload-size"></span>' +
                     '<a class="qq-upload-cancel" href="#">{% trans "Cancel" %}</a>' +
                     '<span class="qq-upload-failed-text">{% trans "Failed" %}</span>' +
                     '<div class="progress-bar"><div class="content"></div></div>' +
-                '</li>',
+                '</div>',
 
                 params: { 'csrf_token': '{{ csrf_token }}',
                           'csrf_name': 'csrfmiddlewaretoken',
@@ -51,7 +59,7 @@
                 },
 
                 getItem: function(id) {
-                    var items = $(this.element).find('.qq-upload-list li').get();
+                    var items = $(this.element).find('.qq-upload-list > div').get();
                     var item = items.pop();
 
                     while (typeof item != "undefined") {
@@ -67,9 +75,9 @@
                     bar.css('width', new_width);
                 },
                 onComplete: function(id, fileName, resp){
-                    if (resp.success) {
-                        this.getItem(id).fadeOut('slow');
-                    }
+                    // if (resp.success) {
+                    //     this.getItem(id).fadeOut('slow');
+                    // }
                 },
                 showMessage: function(message){ alert(message); }
             });
@@ -80,7 +88,7 @@
 
 <!-- COLTYPE/BODYCLASS -->
 {% block bodyclass %}change-form filebrowser{% if query.pop %} popup{% endif %}{% endblock %}
-{% block coltype %}flex{% endblock %}
+{% block coltype %}colM{% endblock %}
 
 <!-- BREADCRUMBS -->
 {% block breadcrumbs %}
@@ -91,44 +99,53 @@
 
 <!-- CONTENT -->
 {% block content %}
-<div class="container-flexible">
-    <div class="form-container">
-        <form>
+<div id="content-main">
+    <form>
+        <div>
             <fieldset class="module aligned">
             <div class="form-row" id="file-uploader">
-                <noscript>
-                    {% trans "Please enable Javascript to upload files." %}
-                </noscript>
+                <div>
+                    <noscript>
+                        {% trans "Please enable Javascript to upload files." %}
+                    </noscript>
+                </div>
             </div>
             </fieldset>
-            <fieldset class="module collapse closed">
-                <h2 class="collapse-handler">{% trans "Help" %}</h2>
+            <fieldset class="module aligned">
+                <h2>{% trans "Help" %}</h2>
                 <div class="form-row">
-                    {% for extension in settings_var.EXTENSIONS.items %}
-                        {% if forloop.first %}<label class="required">{% trans "Allowed" %}:</label><br />{% endif %}
-                        {% ifnotequal extension.0 'Folder' %}
-                            {{ extension.0|safe }} ({{ extension.1|join:", "|safe }})<br />
-                        {% endifnotequal %}
-                    {% endfor %}
+                    <div>
+                        <label class="required">{% trans "Allowed" %}</label>
+                        <p>
+                        {% for extension in settings_var.EXTENSIONS.items %}
+                            {% ifnotequal extension.0 'Folder' %}
+                                <strong>{% trans extension.0|safe %}</strong> ({{ extension.1|join:", "|safe }})<br />
+                            {% endifnotequal %}
+                        {% endfor %}
+                        </p>
+                    </div>
                 </div>
                 <div class="form-row">
-                    <label class="required">{% trans "Max. Filesize" %}:</label>
-                    {{ settings_var.MAX_UPLOAD_SIZE|filesizeformat }}
+                    <div>
+                        <label class="required">{% trans "Max. Filesize" %}</label>
+                        <p>{{ settings_var.MAX_UPLOAD_SIZE|filesizeformat }}</p>
+                    </div>
                 </div>
                 {% if settings_var.NORMALIZE_FILENAME or settings_var.CONVERT_FILENAME %}
                     <div class="form-row">
-                        <p>
+                        <div>
+                            <label class="required">{% trans "Filename" %}</label>
                             {% if settings_var.NORMALIZE_FILENAME %}
-                                {% trans "The Name will be normalized by converting or stripping all non-standard characters." %} <br />
+                                <p>{% trans "The Name will be normalized by converting or stripping all non-standard characters." %}</p>
                             {% endif %}
                             {% if settings_var.CONVERT_FILENAME %}
-                                {% trans "The Name will be converted to lowercase. Spaces will be replaced with underscores." %}
+                                <p>{% trans "The Name will be converted to lowercase. Spaces will be replaced with underscores." %}</p>
                             {% endif %}
-                        </p>
+                        </div>
                     </div>
                 {% endif %}
             </fieldset>
-        </form>
-    </div>
+        </div>
+    </form>
 </div>
 {% endblock %}
