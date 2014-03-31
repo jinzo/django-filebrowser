@@ -120,7 +120,6 @@
                 {% if filelisting.results_current %}
                 <div class="results">
                     <table id="result_list">
-                        {% include "filebrowser/include/tableheader.html" %}
                         {% with "filebrowser/admin/"|add:settings_var.THEME|add:"/include/tableheader.html" as tableheader_template %}
                         {% include tableheader_template %}
                         {% endwith %}
