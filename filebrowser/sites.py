@@ -152,6 +152,9 @@ def get_settings_var(directory=DIRECTORY):
     settings_var['CONVERT_FILENAME'] = CONVERT_FILENAME
     # Traverse directories when searching
     settings_var['SEARCH_TRAVERSE'] = SEARCH_TRAVERSE
+    # THEME
+    settings_var['THEME'] = THEME
+
     return settings_var
 
 

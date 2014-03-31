@@ -110,7 +110,9 @@
             {% endblock %}
             {% block filters %}
                 <!-- FILTERS -->
-                {% include "filebrowser/include/filter.html" %}
+                {% with "filebrowser/admin/"|add:settings_var.THEME|add:"/include/filter.html" as filter_template %}
+                {% include filter_template %}
+
             {% endblock %}
 
             <form id="changelist-form" action="" method="post">{% csrf_token %}
@@ -119,8 +121,12 @@
                 <div class="results">
                     <table id="result_list">
                         {% include "filebrowser/include/tableheader.html" %}
+                        {% with "filebrowser/admin/"|add:settings_var.THEME|add:"/include/tableheader.html" as tableheader_template %}
+                        {% include tableheader_template %}
+
                         <tbody>
-                        {% include "filebrowser/include/filelisting.html" %}
+                            {% with "filebrowser/admin/"|add:settings_var.THEME|add:"/include/filelisting.html" as filelisting_template %}
+                            {% include filelisting_template %}
                         </tbody>
                     </table>
                 </div>
