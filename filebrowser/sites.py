@@ -354,6 +354,7 @@ class FileBrowserSite(object):
             'settings_var': get_settings_var(directory=self.directory),
             'breadcrumbs': get_breadcrumbs(query, query.get('dir', '')),
             'breadcrumbs_title': "",
+            'is_popup': "pop" in request.REQUEST,
             'filebrowser_site': self
         }, context_instance=Context(request, current_app=self.name))
 
@@ -390,6 +391,7 @@ class FileBrowserSite(object):
             'settings_var': get_settings_var(directory=self.directory),
             'breadcrumbs': get_breadcrumbs(query, query.get('dir', '')),
             'breadcrumbs_title': _(u'New Folder'),
+            'is_popup': "pop" in request.REQUEST,
             'filebrowser_site': self
         }, context_instance=Context(request, current_app=self.name))
 
@@ -405,6 +407,7 @@ class FileBrowserSite(object):
             'settings_var': get_settings_var(directory=self.directory),
             'breadcrumbs': get_breadcrumbs(query, query.get('dir', '')),
             'breadcrumbs_title': _(u'Upload'),
+            'is_popup': "pop" in request.REQUEST,
             'filebrowser_site': self
         }, context_instance=Context(request, current_app=self.name))
 
@@ -438,6 +441,7 @@ class FileBrowserSite(object):
             'settings_var': get_settings_var(directory=self.directory),
             'breadcrumbs': get_breadcrumbs(query, query.get('dir', '')),
             'breadcrumbs_title': _(u'Confirm delete'),
+            'is_popup': "pop" in request.REQUEST,
             'filebrowser_site': self
         }, context_instance=Context(request, current_app=self.name))
 
@@ -511,6 +515,7 @@ class FileBrowserSite(object):
             'settings_var': get_settings_var(directory=self.directory),
             'breadcrumbs': get_breadcrumbs(query, query.get('dir', '')),
             'breadcrumbs_title': u'%s' % fileobject.filename,
+            'is_popup': "pop" in request.REQUEST,
             'filebrowser_site': self
         }, context_instance=Context(request, current_app=self.name))
 
@@ -527,6 +532,7 @@ class FileBrowserSite(object):
             'fileobject': fileobject,
             'query': query,
             'settings_var': get_settings_var(directory=self.directory),
+            'is_popup': "pop" in request.REQUEST,
             'filebrowser_site': self
         }, context_instance=Context(request, current_app=self.name))
 

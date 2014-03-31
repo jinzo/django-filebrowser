@@ -22,6 +22,7 @@ tinyMCE.init({
         cmsURL = cmsURL + '&type=' + type;
 
         tinymce.activeEditor.windowManager.open({
+            title: 'Select or upload a file'
             file: cmsURL,
             width: 800, // Your dimensions may differ - toy around with them!
             height: 500,
