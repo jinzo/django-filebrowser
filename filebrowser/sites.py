@@ -26,7 +26,7 @@ from django.core.files.storage import DefaultStorage, default_storage, FileSyste
 # FILEBROWSER IMPORTS
 from filebrowser.settings import STRICT_PIL, DIRECTORY, EXTENSIONS, SELECT_FORMATS, ADMIN_VERSIONS, ADMIN_THUMBNAIL, MAX_UPLOAD_SIZE,\
     NORMALIZE_FILENAME, CONVERT_FILENAME, SEARCH_TRAVERSE, EXCLUDE, VERSIONS, EXTENSION_LIST, DEFAULT_SORTING_BY, DEFAULT_SORTING_ORDER,\
-    LIST_PER_PAGE, OVERWRITE_EXISTING, THEME
+    LIST_PER_PAGE, OVERWRITE_EXISTING, THEME, RETURN_ON_UPLOAD
 from filebrowser.templatetags.fb_tags import query_helper
 from filebrowser.base import FileListing, FileObject
 from filebrowser.decorators import path_exists, file_exists
@@ -152,8 +152,10 @@ def get_settings_var(directory=DIRECTORY):
     settings_var['CONVERT_FILENAME'] = CONVERT_FILENAME
     # Traverse directories when searching
     settings_var['SEARCH_TRAVERSE'] = SEARCH_TRAVERSE
-    # THEME
+    # Admin theme
     settings_var['THEME'] = THEME
+    # Return to file listing on successful upload
+    settings_var['RETURN_ON_UPLOAD'] = RETURN_ON_UPLOAD
 
     return settings_var
 

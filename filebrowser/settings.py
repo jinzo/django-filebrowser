@@ -106,6 +106,8 @@ OVERWRITE_EXISTING = getattr(settings, "FILEBROWSER_OVERWRITE_EXISTING", True)
 
 THEME = getattr(settings, "FILEBROWSER_THEME", 'grappelli')
 
+RETURN_ON_UPLOAD = getattr(settings, "FILEBROWSER_RETURN_ON_UPLOAD", False)
+
 # EXTRA TRANSLATION STRINGS
 
 # The following strings are not availabe within views or templates

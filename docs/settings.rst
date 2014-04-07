@@ -291,11 +291,20 @@ OVERWRITE_EXISTING
     OVERWRITE_EXISTING = getattr(settings, "FILEBROWSER_OVERWRITE_EXISTING", True)
 
 THEME
-^^^^^^^^^^^^^^^^^^
+^^^^^
 
-.. versionadded:: 3.5.5
+.. versionadded:: 3.5.6
 
 Selec the admin theme you wish to use. Either ``grappelli`` (default) or ``django``::
 
     THEME = getattr(settings, "FILEBROWSER_THEME", 'grappelli')
->>>>>>> f162d7b... Continued work on django theme, settings stub.
+
+RETURN_ON_UPLOAD
+^^^^^^^^^^^^^^^^
+
+.. versionadded:: 3.5.6
+
+``True`` in order to return to file listing on successful upload. ``False`` to stay on the upload page::
+
+    RETURN_ON_UPLOAD = getattr(settings, "FILEBROWSER_RETURN_ON_UPLOAD", False)
+

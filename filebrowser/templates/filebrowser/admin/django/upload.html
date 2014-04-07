@@ -75,9 +75,12 @@
                     bar.css('width', new_width);
                 },
                 onComplete: function(id, fileName, resp){
-                    // if (resp.success) {
-                    //     this.getItem(id).fadeOut('slow');
-                    // }
+                    {% if settings_var.RETURN_ON_UPLOAD %}
+                    if (resp.success) {
+                        var newpath='../browse/{% query_string %}';
+                        window.location=newpath;                    
+                    }
+                    {% endif %}
                 },
                 showMessage: function(message){ alert(message); }
             });
@@ -87,7 +90,7 @@
 {% endblock %}
 
 <!-- COLTYPE/BODYCLASS -->
-{% block bodyclass %}change-form filebrowser{% if query.pop %} popup{% endif %}{% endblock %}
+{% block bodyclass %}change-form filebrowser{% endblock %}
 {% block coltype %}colM{% endblock %}
 
 <!-- BREADCRUMBS -->
