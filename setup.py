@@ -5,14 +5,14 @@ def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
 setup(
-    name='django-filebrowser',
+    name='django-pluggable-filebrowser',
     version='3.5.7',
-    description='Media-Management with Grappelli',
+    description='Pluggable Django Media-Management.',
     long_description = read('README.rst'),
-    url = 'http://django-filebrowser.readthedocs.org',
+    url = 'https://github.com/jinzo/django-pluggable-filebrowser',
     download_url='',
-    author='Patrick Kranzlmueller, Axel Swoboda (vonautomatisch)',
-    author_email='office@vonautomatisch.at',
+    author='Matjaž Črnko, Patrick Kranzlmueller, Axel Swoboda (vonautomatisch)',
+    author_email='matjaz.crnko@gmail.com',
     license='BSD',
     packages=find_packages(),
     include_package_data=True,
@@ -34,6 +34,6 @@ setup(
     ],
     zip_safe = False,
     install_requires = [
-        'django-grappelli>=2.4,<2.5.99',
+        'django>=1.4',
     ],
 )
