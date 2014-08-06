@@ -30,6 +30,12 @@ The project can be used as a drop in replacement for Django Filebrowser.
 Installation
 ------------
 
+Stable:
+
+    pip install django-pluggable-filebrowser
+
+Development:
+
     pip install -e git+git@github.com:jinzo/django-pluggable-filebrowser.git#egg=django-pluggable-filebrowser
 
 Documentation

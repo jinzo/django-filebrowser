@@ -7,7 +7,7 @@ def read(fname):
 
 setup(
     name='django-pluggable-filebrowser',
-    version='3.5.7',
+    version='3.5.8',
     description='Pluggable Django Media-Management.',
     long_description = read('README.rst'),
     url = 'https://github.com/jinzo/django-pluggable-filebrowser',
