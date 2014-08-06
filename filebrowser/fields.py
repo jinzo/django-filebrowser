@@ -6,7 +6,7 @@ import os
 # DJANGO IMPORTS
 from django.core import urlresolvers
 from django.db import models
-from django.db.models.fields import Field, CharField
+from django.db.models.fields import CharField
 from django import forms
 from django.forms.widgets import Input
 from django.template.loader import render_to_string
@@ -55,7 +55,7 @@ class FileBrowseWidget(Input):
                 final_attrs['directory'] = os.path.split(value.original.path_relative_directory)[0]
             except:
                 pass
-        return render_to_string("filebrowser/custom_field.html", locals())
+        return render_to_string("filebrowser/admin/%s/custom_field.html" % THEME, locals())
 
 
 class FileBrowseFormField(forms.CharField):

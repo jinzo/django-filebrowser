@@ -30,7 +30,7 @@ from filebrowser.settings import STRICT_PIL, DIRECTORY, EXTENSIONS, SELECT_FORMA
 from filebrowser.templatetags.fb_tags import query_helper
 from filebrowser.base import FileListing, FileObject
 from filebrowser.decorators import path_exists, file_exists
-from filebrowser.storage import FileSystemStorageMixin, StorageMixin
+from filebrowser.storage import FileSystemStorageMixin
 from filebrowser.utils import convert_filename
 from filebrowser import signals
 
